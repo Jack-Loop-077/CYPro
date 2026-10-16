@@ -4,262 +4,222 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مشاهداتي</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#161a20;--s1:#1e242c;--s2:#262d37;--line:#2f3743;--tx:#e7e4dc;--mut:#8b94a1;--ac:#8fb8a8;--ac2:#c9b88a;--warn:#c98f8a;--blue:#8aa6c9}
+:root{--bg:#161a20;--s1:#1e242c;--s2:#262d37;--line:#2f3743;--tx:#e7e4dc;--mut:#8b94a1;--ac:#8fb8a8;--warn:#c98f8a}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html{background:var(--bg)}
 body{font-family:'Readex Pro',system-ui,sans-serif;color:var(--tx);background:var(--bg);min-height:100vh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);line-height:1.6}
-button,input,select,textarea{font:inherit;color:inherit}
+button,input{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px 90px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 0 14px}
-h1{font-size:1.5rem;font-weight:500;letter-spacing:-.01em}
-.who{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:.85rem}
-.who img{width:30px;height:30px;border-radius:50%}
-.btn{background:var(--s2);border:1px solid var(--line);padding:9px 16px;border-radius:10px;font-size:.9rem;transition:background .2s}
-.btn:hover{background:#2d3541}
-.btn.pri{background:var(--ac);color:#12201b;border-color:var(--ac);font-weight:500}
-.btn.pri:hover{background:#a2c7b8}
-.btn.del{color:var(--warn)}
-.stats{display:flex;gap:22px;padding:6px 0 18px;color:var(--mut);font-size:.88rem;flex-wrap:wrap}
-.stats b{color:var(--tx);font-weight:500;font-size:1.1rem;margin-inline-start:5px}
-.bar{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
-.bar::-webkit-scrollbar{display:none}
-.chip{flex:none;padding:7px 15px;border-radius:99px;border:1px solid var(--line);color:var(--mut);font-size:.88rem}
-.chip.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
-.tools{display:flex;gap:8px;margin:4px 0 20px}
-.tools input,.tools select{background:var(--s1);border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:0}
-.tools input{flex:1}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 14px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 100px}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0 12px}
+h1{font-size:1.4rem;font-weight:500}
+.av{width:34px;height:34px;border-radius:50%;overflow:hidden;border:1px solid var(--line)}
+.av img{width:100%;height:100%;display:block}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:14px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:6px 14px;border-radius:8px;color:var(--mut);font-size:.9rem}
+.tab.on{background:var(--s2);color:var(--tx)}
+.find{width:100%;background:var(--s1);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:20px 14px}
 .card{text-align:right;display:block;width:100%}
-.poster{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--s2);box-shadow:0 10px 24px -14px #000}
-.poster img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
-.card:hover .poster img{transform:scale(1.04)}
-.poster .ph{display:grid;place-items:center;height:100%;padding:12px;text-align:center;color:var(--mut);font-size:.85rem}
-.poster i{position:absolute;inset-inline:0;bottom:0;height:4px;background:#0006}
-.poster i s{display:block;height:100%;background:var(--ac);text-decoration:none;transition:width .4s}
-.tag{position:absolute;top:8px;inset-inline-start:8px;font-size:.72rem;padding:2px 9px;border-radius:99px;background:#101418d9;backdrop-filter:blur(4px)}
-.card h3{font-size:.92rem;font-weight:500;margin:9px 0 1px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card p{font-size:.8rem;color:var(--mut)}
-.st-watching{color:var(--blue)}.st-completed{color:var(--ac)}.st-planned{color:var(--ac2)}.st-dropped{color:var(--warn)}
-.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:70px 10px}
-.empty b{display:block;color:var(--tx);font-weight:500;font-size:1.1rem;margin-bottom:6px}
-.fab{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));inset-inline-start:20px;width:54px;height:54px;border-radius:16px;background:var(--ac);color:#12201b;font-size:1.8rem;box-shadow:0 12px 26px -8px #000;z-index:5}
-.sheet-bg{position:fixed;inset:0;background:#0009;display:none;align-items:flex-end;justify-content:center;z-index:10}
-.sheet-bg.open{display:flex}
-.sheet{background:var(--s1);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));animation:up .25s ease-out}
-@keyframes up{from{transform:translateY(40px);opacity:0}}
-@media(min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:18px}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-.sheet h2{font-size:1.1rem;font-weight:500;margin-bottom:12px}
-.row{display:flex;gap:8px;margin-bottom:10px}
-.row>*{flex:1;min-width:0}
-label{display:block;font-size:.8rem;color:var(--mut);margin:10px 0 4px}
-.sheet input,.sheet select,.sheet textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
-.res{display:grid;gap:8px;margin-top:12px}
+.poster{position:relative;aspect-ratio:2/3;border-radius:6px;overflow:hidden;background:var(--s2)}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{display:grid;place-items:center;height:100%;padding:10px;text-align:center;color:var(--mut);font-size:.85rem}
+.poster i{position:absolute;inset-inline:0;bottom:0;height:3px;background:#0007}
+.poster s{display:block;height:100%;background:var(--ac)}
+.card h3{font-size:.9rem;font-weight:400;margin:8px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card p{font-size:.78rem;color:var(--mut)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:80px 10px}
+.fab{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom));inset-inline-start:20px;width:54px;height:54px;border-radius:50%;background:var(--ac);color:#12201b;font-size:1.8rem;box-shadow:0 10px 24px -8px #000}
+.bg{position:fixed;inset:0;background:#000a;display:none;align-items:flex-end;justify-content:center;z-index:10}
+.bg.open{display:flex}
+.sheet{background:var(--s1);width:100%;max-width:520px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom))}
+@media(min-width:700px){.bg{align-items:center}.sheet{border-radius:16px}}
+input.in{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+.res{display:grid;gap:8px;margin-top:14px}
 .hit{display:flex;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px;text-align:right;width:100%}
-.hit img,.hit .nop{width:46px;height:68px;object-fit:cover;border-radius:4px;background:var(--s2);flex:none}
-.hit b{font-weight:500;font-size:.92rem;display:block}
-.hit span{font-size:.78rem;color:var(--mut)}
-.hero{display:flex;gap:14px;margin-bottom:6px}
-.hero .poster{width:110px;flex:none}
-.hero h2{margin:0 0 4px}
-.hero small{color:var(--mut);display:block}
-.ep{display:flex;align-items:center;gap:10px}
-.ep button{width:42px;height:42px;border-radius:12px;background:var(--s2);border:1px solid var(--line);font-size:1.3rem}
-.ep input{text-align:center;width:70px!important}
-.ep span{color:var(--mut);font-size:.9rem}
-.acts{display:flex;gap:8px;margin-top:18px}
-.acts .btn{flex:1}
-.login{min-height:80vh;display:grid;place-content:center;text-align:center;gap:14px;justify-items:center}
-.login p{color:var(--mut);max-width:280px}
-.note{font-size:.78rem;color:var(--mut);margin-top:8px}
+.hit img,.hit .nop{width:44px;height:64px;object-fit:cover;border-radius:4px;background:var(--s2);flex:none}
+.hit b{font-weight:400;font-size:.92rem;display:block}
+.hit span,.note{font-size:.8rem;color:var(--mut)}
+.note{margin-top:12px;text-align:center}
+.pv{display:flex;gap:14px}
+.pv .poster{width:120px;flex:none}
+.pv h2{font-size:1.1rem;font-weight:500}
+.pv small{display:block;color:var(--mut);font-size:.82rem}
+.syn{font-size:.85rem;color:var(--mut);margin-top:8px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.q{margin:16px 0 8px;font-size:.95rem}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.b{background:var(--s2);border:1px solid var(--line);padding:11px;border-radius:10px;font-size:.9rem}
+.b.on,.b.pri{background:var(--ac);border-color:var(--ac);color:#12201b}
+.b.del{color:var(--warn)}
+.b.wide{grid-column:1/-1}
+.ep{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0}
+.ep button{width:44px;height:44px;border-radius:12px;background:var(--s2);border:1px solid var(--line);font-size:1.3rem}
+.ep input{width:64px;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 4px}
+.ep span{color:var(--mut)}
+.login{min-height:85vh;display:grid;place-content:center;justify-items:center;gap:16px;text-align:center}
+.login p{color:var(--mut)}
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:8px 16px;border-radius:10px;font-size:.88rem;display:none;z-index:20}
 </style>
 </head>
 <body>
 <div class="wrap" id="app"></div>
-<div class="sheet-bg" id="bg"><div class="sheet" id="sheet"></div></div>
+<div class="bg" id="bg"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore, collection, doc, addDoc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const firebaseConfig = {
+const fb = initializeApp({
   apiKey: "AIzaSyDmvg7yOztWN_dFLeannNscXvddofkzTUg",
   authDomain: "check-your-progres.firebaseapp.com",
   projectId: "check-your-progres",
   storageBucket: "check-your-progres.firebasestorage.app",
   messagingSenderId: "1073488376202",
   appId: "1:1073488376202:web:8bc341c1ea525b60ab1873"
-};
-const fb = initializeApp(firebaseConfig);
+});
 const auth = getAuth(fb), db = getFirestore(fb);
 
 const TYPES = {movie:'فلم', series:'مسلسل', anime:'أنمي'};
 const STATUS = {watching:'أشاهده', completed:'خلصته', planned:'أريد أشاهده', dropped:'عفته'};
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let user = null, items = [], unsub = null;
-let f = {status:'all', type:'all', genre:'all', q:'', sort:'updated'};
-
+let user = null, items = [], unsub = null, tab = 'all', q = '';
 const toast = m => { const t = $('#toast'); t.textContent = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 2200); };
 const col = () => collection(db, 'users', user.uid, 'items');
 
 onAuthStateChanged(auth, u => {
-  user = u;
-  if (unsub) unsub();
+  user = u; if (unsub) unsub();
   if (!u) { items = []; return render(); }
-  unsub = onSnapshot(col(), s => { items = s.docs.map(d => ({id:d.id, ...d.data()})); render(); },
-    e => toast('تعذر تحميل البيانات: تأكد من قواعد Firestore'));
+  unsub = onSnapshot(col(), s => { items = s.docs.map(d => ({id:d.id, ...d.data()})); render(); }, () => toast('تعذر تحميل البيانات، راجع قواعد Firestore'));
   render();
 });
 
-function progressText(it){
-  if (it.type === 'movie') return it.status === 'completed' ? 'شاهدته' : STATUS[it.status];
-  const t = it.total ? ` من ${it.total}` : '';
-  if (it.status === 'completed') return `خلصته${it.total ? ' (' + it.total + ' حلقة)' : ''}`;
-  if (it.status === 'dropped') return `عفته عند حلقة ${it.cur || 0}`;
-  if (it.status === 'planned') return 'بالقائمة';
-  return `وصلت حلقة ${it.cur || 0}${t}`;
-}
 const pct = it => it.status === 'completed' ? 100 : (it.total ? Math.min(100, (it.cur || 0) / it.total * 100) : 0);
+function ptext(it){
+  if (it.type === 'movie') return STATUS[it.status];
+  if (it.status === 'completed') return 'خلصته';
+  if (it.status === 'dropped') return `عفته عند حلقة ${it.cur || 0}`;
+  if (it.status === 'planned') return 'أريد أشاهده';
+  return `حلقة ${it.cur || 0}${it.total ? ' من ' + it.total : ''}`;
+}
 
 function render(){
   const app = $('#app');
   if (!user){
-    app.innerHTML = `<div class="login"><h1>مشاهداتي</h1><p>سجل كل فلم ومسلسل وأنمي شفته، وين وصلت بيه، وشنو عفته.</p><button class="btn pri" id="go">الدخول بحساب Google</button></div>`;
+    app.innerHTML = `<div class="login"><h1>مشاهداتي</h1><p>سجل وين وصلت بكل فلم ومسلسل وأنمي.</p><button class="b pri" id="go" style="padding:11px 24px">الدخول بحساب Google</button></div>`;
     $('#go').onclick = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(e => toast('فشل الدخول: ' + e.code));
     return;
   }
-  const genres = [...new Set(items.flatMap(i => i.genres || []))].sort();
-  const cnt = s => items.filter(i => i.status === s).length;
-  let list = items.filter(i =>
-    (f.status === 'all' || i.status === f.status) && (f.type === 'all' || i.type === f.type) &&
-    (f.genre === 'all' || (i.genres || []).includes(f.genre)) &&
-    (!f.q || i.title.toLowerCase().includes(f.q.toLowerCase())));
-  list.sort((a, b) => f.sort === 'title' ? a.title.localeCompare(b.title) : (b.updated || 0) - (a.updated || 0));
-
-  app.innerHTML = `
-  <header><h1>مشاهداتي</h1><div class="who"><img src="${esc(user.photoURL)}" alt=""><button class="btn" id="out">خروج</button></div></header>
-  <div class="stats"><span>خلصت<b>${cnt('completed')}</b></span><span>أشاهد<b>${cnt('watching')}</b></span><span>بالقائمة<b>${cnt('planned')}</b></span><span>عفت<b>${cnt('dropped')}</b></span></div>
-  <div class="bar">${[['all','الكل'],...Object.entries(STATUS)].map(([k,v]) => `<button class="chip ${f.status===k?'on':''}" data-st="${k}">${v}</button>`).join('')}</div>
-  <div class="bar">${[['all','كل الأنواع'],...Object.entries(TYPES)].map(([k,v]) => `<button class="chip ${f.type===k?'on':''}" data-ty="${k}">${v}</button>`).join('')}</div>
-  <div class="tools">
-    <input id="q" type="search" placeholder="ابحث بقائمتك" value="${esc(f.q)}">
-    <select id="gn"><option value="all">كل التصنيفات</option>${genres.map(g => `<option ${f.genre===g?'selected':''}>${esc(g)}</option>`).join('')}</select>
-  </div>
-  <div class="grid">${list.length ? list.map(card).join('') : `<div class="empty"><b>${items.length ? 'ماكو نتائج' : 'قائمتك فارغة'}</b>${items.length ? 'غيّر الفلتر أو البحث.' : 'اضغط + وأضف أول عمل.'}</div>`}</div>
+  const list = items.filter(i => (tab === 'all' || i.status === tab) && (!q || i.title.toLowerCase().includes(q.toLowerCase()))).sort((a, b) => (b.updated || 0) - (a.updated || 0));
+  app.innerHTML = `<header><h1>مشاهداتي</h1><button class="av" id="out" aria-label="خروج"><img src="${esc(user.photoURL)}" alt=""></button></header>
+  <div class="tabs">${[['all','الكل'],...Object.entries(STATUS)].map(([k,v]) => `<button class="tab ${tab===k?'on':''}" data-t="${k}">${v}</button>`).join('')}</div>
+  ${items.length > 6 ? `<input class="find" id="q" type="search" placeholder="ابحث بقائمتك" value="${esc(q)}">` : ''}
+  <div class="grid">${list.length ? list.map(card).join('') : `<div class="empty">${items.length ? 'ماكو نتائج' : 'اضغط + حتى تضيف أول عمل'}</div>`}</div>
   <button class="fab" id="add" aria-label="إضافة">+</button>`;
-
-  $('#out').onclick = () => signOut(auth);
+  $('#out').onclick = () => confirm('تسجيل الخروج؟') && signOut(auth);
   $('#add').onclick = openAdd;
-  document.querySelectorAll('[data-st]').forEach(b => b.onclick = () => { f.status = b.dataset.st; render(); });
-  document.querySelectorAll('[data-ty]').forEach(b => b.onclick = () => { f.type = b.dataset.ty; render(); });
+  document.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { tab = b.dataset.t; render(); });
   document.querySelectorAll('[data-id]').forEach(b => b.onclick = () => openEdit(b.dataset.id));
-  $('#gn').onchange = e => { f.genre = e.target.value; render(); };
-  $('#q').oninput = e => { f.q = e.target.value; const p = e.target.selectionStart; render(); const q = $('#q'); q.focus(); q.setSelectionRange(p, p); };
+  const qi = $('#q'); if (qi) qi.oninput = e => { q = e.target.value; const p = e.target.selectionStart; render(); const n = $('#q'); n.focus(); n.setSelectionRange(p, p); };
 }
+const card = it => `<button class="card" data-id="${it.id}"><div class="poster">${it.poster ? `<img loading="lazy" src="${esc(it.poster)}" alt="">` : `<div class="ph">${esc(it.title)}</div>`}<i><s style="width:${pct(it)}%"></s></i></div><h3>${esc(it.title)}</h3><p>${ptext(it)}</p></button>`;
 
-function card(it){
-  return `<button class="card" data-id="${it.id}">
-    <div class="poster">${it.poster ? `<img loading="lazy" src="${esc(it.poster)}" alt="${esc(it.title)}">` : `<div class="ph">${esc(it.title)}</div>`}
-    <span class="tag">${TYPES[it.type]}</span><i><s style="width:${pct(it)}%"></s></i></div>
-    <h3>${esc(it.title)}</h3><p class="st-${it.status}">${progressText(it)}</p></button>`;
-}
-
-/* ---------- نافذة ---------- */
-const open = html => { $('#sheet').innerHTML = html; $('#bg').classList.add('open'); };
+const open = h => { $('#sheet').innerHTML = h; $('#bg').classList.add('open'); };
 const close = () => $('#bg').classList.remove('open');
 $('#bg').onclick = e => { if (e.target.id === 'bg') close(); };
 
-/* ---------- البحث بالمصادر ---------- */
-let src = 'anime';
-const getKey = () => localStorage.getItem('tmdb') || '';
+/* ---------- بحث موحد من كل المصادر ---------- */
+const jf = (url, ms = 8000) => { const c = new AbortController(), t = setTimeout(() => c.abort(), ms); return fetch(url, {signal:c.signal}).then(r => r.json()).finally(() => clearTimeout(t)); };
+const strip = h => String(h || '').replace(/<[^>]*>/g, '');
+const norm = s => String(s || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const tmdbKey = () => localStorage.getItem('tmdb') || '';
+
+const SOURCES = {
+  anime: async q => (await jf(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(q)}&limit=8`)).data.map(a => ({
+    title:a.title_english || a.title, alt:a.title, poster:a.images?.jpg?.large_image_url, type:a.type === 'Movie' ? 'movie' : 'anime',
+    total:a.episodes || 0, genres:[...a.genres, ...a.themes].map(g => g.name), year:a.year || a.aired?.prop?.from?.year || '', about:a.synopsis})),
+  tv: async q => (await jf(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`)).slice(0, 8).map(({show:s}) => ({
+    title:s.name, poster:s.image?.original || s.image?.medium, type:'series', genres:s.genres || [], year:(s.premiered || '').slice(0, 4), about:strip(s.summary), tvmaze:s.id})),
+  movie: async q => (await jf(`https://itunes.apple.com/search?media=movie&limit=8&term=${encodeURIComponent(q)}`)).results.map(m => ({
+    title:m.trackName, poster:(m.artworkUrl100 || '').replace('100x100bb', '600x600bb'), type:'movie', genres:[m.primaryGenreName].filter(Boolean), year:(m.releaseDate || '').slice(0, 4), about:m.longDescription})),
+  tmdb: async q => { if (!tmdbKey()) return []; const j = await jf(`https://api.themoviedb.org/3/search/multi?api_key=${tmdbKey()}&language=ar&query=${encodeURIComponent(q)}`);
+    return (j.results || []).filter(r => r.media_type !== 'person').slice(0, 8).map(r => ({title:r.title || r.name, poster:r.poster_path ? 'https://image.tmdb.org/t/p/w500' + r.poster_path : '', type:r.media_type === 'movie' ? 'movie' : 'series', year:(r.release_date || r.first_air_date || '').slice(0, 4), about:r.overview, genres:[], tmdb:[r.media_type, r.id]})); }
+};
+const score = (o, q) => { const n = [norm(o.title), norm(o.alt)], k = norm(q); return n.includes(k) ? 3 : n.some(x => x.startsWith(k)) ? 2 : n.some(x => x.includes(k)) ? 1 : 0; };
+
+let hits = [], runId = 0, timer, lastQ = '';
 function openAdd(){
-  open(`<h2>إضافة عمل</h2>
-  <div class="bar" style="margin:0"><button class="chip" data-s="anime">أنمي</button><button class="chip" data-s="tv">مسلسلات</button><button class="chip" data-s="tmdb">أفلام وكل شي</button><button class="chip" data-s="manual">يدوي</button></div>
-  <div id="sbody"></div>`);
-  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { src = b.dataset.s; drawSrc(); });
-  drawSrc();
+  open(`<input class="in" id="sq" type="search" placeholder="اكتب اسم الفلم أو المسلسل أو الأنمي" autofocus><div class="res" id="res"></div><div class="note" id="nt"></div>`);
+  $('#sq').oninput = e => { clearTimeout(timer); timer = setTimeout(() => run(e.target.value.trim()), 500); };
+  $('#sq').onkeydown = e => { if (e.key === 'Enter') { clearTimeout(timer); run(e.target.value.trim()); } };
+  $('#nt').innerHTML = `<button class="note" id="mk" style="text-decoration:underline">${tmdbKey() ? 'تغيير مفتاح TMDB' : 'للبحث بالعربي: اربط مفتاح TMDB'}</button>`;
+  $('#mk').onclick = () => { const k = prompt('الصق مفتاح TMDB (v3) من themoviedb.org/settings/api'); if (k) { localStorage.setItem('tmdb', k.trim()); toast('انحفظ'); } };
 }
-function drawSrc(){
-  document.querySelectorAll('[data-s]').forEach(b => b.classList.toggle('on', b.dataset.s === src));
-  const body = $('#sbody');
-  if (src === 'manual') {
-    body.innerHTML = `<label>الاسم</label><input id="m-t"><label>رابط الصورة (اختياري)</label><input id="m-p" dir="ltr" placeholder="https://...">
-    <button class="btn pri" style="width:100%;margin-top:14px" id="m-ok">متابعة</button>`;
-    $('#m-ok').onclick = () => { const t = $('#m-t').value.trim(); if (!t) return toast('اكتب الاسم'); pick({title:t, poster:$('#m-p').value.trim(), type:'series', genres:[], total:0}); };
-    return;
-  }
-  const needKey = src === 'tmdb' && !getKey();
-  body.innerHTML = (needKey ? `<label>مفتاح TMDB (مجاني من themoviedb.org/settings/api)</label><input id="key" dir="ltr" placeholder="API Key (v3)"><p class="note">يتخزن على جهازك فقط. بدونه استخدم الأنمي أو المسلسلات أو الإضافة اليدوية.</p>` : '') +
-    `<label>ابحث بالاسم</label><div class="row"><input id="sq" type="search" ${needKey ? '' : 'autofocus'}><button class="btn" style="flex:none" id="sgo">بحث</button></div><div class="res" id="res"></div>`;
-  const go = () => search($('#sq').value.trim());
-  $('#sgo').onclick = go; $('#sq').onkeydown = e => { if (e.key === 'Enter') go(); };
+async function run(query){
+  if (query.length < 2) return;
+  lastQ = query;
+  const id = ++runId; hits = []; const res = $('#res'); res.innerHTML = '<div class="note">جاري البحث...</div>';
+  const names = Object.keys(SOURCES);
+  await Promise.all(names.map(n => SOURCES[n](query).catch(() => []).then(list => {
+    if (id !== runId) return;
+    hits = [...hits, ...list.filter(o => o.title)];
+    const seen = new Set();
+    hits = hits.filter(o => { const k = norm(o.title) + o.type + o.year; if (seen.has(k)) return false; seen.add(k); return true; })
+      .map((o, i) => ({o, s:score(o, query), i})).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.o);
+    drawHits();
+  })));
+  if (id === runId && !hits.length) res.innerHTML = '<div class="note">ما لكيت شي. جرب الاسم بالإنكليزي، أو اربط TMDB للعربي.</div>';
 }
-async function search(q){
-  if (!q) return;
-  if (src === 'tmdb' && !getKey()) { const k = $('#key')?.value.trim(); if (!k) return toast('ادخل مفتاح TMDB'); localStorage.setItem('tmdb', k); }
-  const res = $('#res'); res.innerHTML = '<p class="note">جاري البحث...</p>';
+function drawHits(){
+  $('#res').innerHTML = hits.slice(0, 14).map((o, i) => `<button class="hit" data-i="${i}">${o.poster ? `<img src="${esc(o.poster)}" alt="">` : '<div class="nop"></div>'}<div><b>${esc(o.title)}</b><span>${TYPES[o.type]}${o.year ? ' - ' + esc(o.year) : ''}</span></div></button>`).join('');
+  document.querySelectorAll('.hit').forEach(b => b.onclick = () => preview(hits[b.dataset.i]));
+}
+
+/* ---------- معاينة وتأكيد ---------- */
+function preview(o){
+  open(`<div class="pv"><div class="poster">${o.poster ? `<img src="${esc(o.poster)}" alt="">` : `<div class="ph">${esc(o.title)}</div>`}</div>
+    <div><h2>${esc(o.title)}</h2><small>${TYPES[o.type]}${o.year ? ' - ' + esc(o.year) : ''}${o.total ? ' - ' + o.total + ' حلقة' : ''}</small><small>${esc((o.genres || []).join('، '))}</small><p class="syn">${esc(o.about || '')}</p></div></div>
+  <p class="q">هذا اللي تقصده؟</p>
+  <div class="btns"><button class="b pri" data-s="planned">إي، أريد أشاهده</button><button class="b pri" data-s="watching">إي، أشاهده هسه</button><button class="b pri" data-s="completed">إي، خلصته</button><button class="b" id="back">لا، ارجع للنتائج</button></div>`);
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => add(o, b.dataset.s));
+  $('#back').onclick = openAddKeep;
+}
+function openAddKeep(){ const keep = hits; openAdd(); hits = keep; $('#sq').value = lastQ; drawHits(); }
+async function add(o, status){
   try {
-    let out = [];
-    if (src === 'anime') {
-      const j = await (await fetch(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(q)}&limit=12&sfw=false`)).json();
-      out = (j.data || []).map(a => ({title:a.title_english || a.title, poster:a.images?.jpg?.large_image_url, type:a.type === 'Movie' ? 'movie' : 'anime', total:a.episodes || 0, genres:[...(a.genres||[]), ...(a.themes||[])].map(g => g.name), year:a.year || a.aired?.prop?.from?.year}));
-    } else if (src === 'tv') {
-      const j = await (await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`)).json();
-      out = j.map(({show:s}) => ({title:s.name, poster:s.image?.original || s.image?.medium, type:'series', genres:s.genres || [], year:(s.premiered||'').slice(0,4), tvmaze:s.id}));
-    } else {
-      const j = await (await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${getKey()}&language=ar&query=${encodeURIComponent(q)}`)).json();
-      if (j.status_message) { localStorage.removeItem('tmdb'); throw new Error(j.status_message); }
-      out = (j.results || []).filter(r => r.media_type !== 'person').map(r => ({title:r.title || r.name, poster:r.poster_path ? 'https://image.tmdb.org/t/p/w500' + r.poster_path : '', type:r.media_type === 'movie' ? 'movie' : 'series', year:(r.release_date || r.first_air_date || '').slice(0,4), tmdb:[r.media_type, r.id]}));
-    }
-    window._hits = out;
-    res.innerHTML = out.length ? out.map((o, i) => `<button class="hit" data-i="${i}">${o.poster ? `<img src="${esc(o.poster)}" alt="">` : '<div class="nop"></div>'}<div><b>${esc(o.title)}</b><span>${TYPES[o.type]}${o.year ? ' - ' + esc(o.year) : ''}</span></div></button>`).join('') : '<p class="note">ما لكيت شي. جرب اسم ثاني أو مصدر ثاني.</p>';
-    res.querySelectorAll('.hit').forEach(b => b.onclick = () => pick(window._hits[b.dataset.i]));
-  } catch (e) { res.innerHTML = `<p class="note">تعذر البحث: ${esc(e.message)}</p>`; }
-}
-async function pick(o){
-  try {
-    if (o.tvmaze) { const e = await (await fetch(`https://api.tvmaze.com/shows/${o.tvmaze}/episodes`)).json(); o.total = e.length; }
-    if (o.tmdb) {
-      const [t, id] = o.tmdb; const d = await (await fetch(`https://api.themoviedb.org/3/${t}/${id}?api_key=${getKey()}&language=ar`)).json();
-      o.genres = (d.genres || []).map(g => g.name); o.total = t === 'tv' ? d.number_of_episodes || 0 : 0;
-    }
+    if (o.tvmaze) o.total = (await jf(`https://api.tvmaze.com/shows/${o.tvmaze}/episodes`)).length;
+    if (o.tmdb) { const [t, id] = o.tmdb, d = await jf(`https://api.themoviedb.org/3/${t}/${id}?api_key=${tmdbKey()}&language=ar`); o.genres = (d.genres || []).map(g => g.name); o.total = t === 'tv' ? d.number_of_episodes || 0 : 0; }
   } catch {}
-  const it = {title:o.title, poster:o.poster || '', type:o.type, genres:o.genres || [], total:o.total || 0, year:o.year || '', status:'planned', cur:0, note:'', updated:Date.now()};
+  const it = {title:o.title, poster:o.poster || '', type:o.type, genres:o.genres || [], total:o.total || 0, year:o.year || '', status, cur:0, updated:Date.now()};
+  if (status === 'completed') it.cur = it.total;
   const ref = await addDoc(col(), it);
-  openEdit(ref.id, {id:ref.id, ...it});
+  toast('انضاف'); status === 'watching' && o.type !== 'movie' ? openEdit(ref.id, {id:ref.id, ...it}) : close();
 }
 
 /* ---------- تعديل ---------- */
 function openEdit(id, local){
   const it = local || items.find(i => i.id === id); if (!it) return;
-  const isM = it.type === 'movie';
-  open(`<div class="hero"><div class="poster">${it.poster ? `<img src="${esc(it.poster)}" alt="">` : `<div class="ph">${esc(it.title)}</div>`}</div>
-    <div><h2>${esc(it.title)}</h2><small>${TYPES[it.type]}${it.year ? ' - ' + esc(it.year) : ''}</small><small>${esc((it.genres || []).join('، '))}</small></div></div>
-  <div class="row"><div><label>الحالة</label><select id="e-st">${Object.entries(STATUS).map(([k,v]) => `<option value="${k}" ${it.status===k?'selected':''}>${v}</option>`).join('')}</select></div>
-  <div><label>النوع</label><select id="e-ty">${Object.entries(TYPES).map(([k,v]) => `<option value="${k}" ${it.type===k?'selected':''}>${v}</option>`).join('')}</select></div></div>
-  <div id="eps" ${isM ? 'hidden' : ''}><label>وين وصلت</label>
-    <div class="ep"><button id="e-m" aria-label="أقل">-</button><input id="e-c" type="number" min="0" value="${it.cur || 0}"><button id="e-p" aria-label="أكثر">+</button><span>من</span><input id="e-t" type="number" min="0" value="${it.total || 0}" style="width:70px"></div></div>
-  <label>ملاحظة</label><textarea id="e-n" rows="2" placeholder="مثلاً: عفته لأن القصة بطيئة">${esc(it.note)}</textarea>
-  <div class="acts"><button class="btn pri" id="e-ok">حفظ</button><button class="btn del" id="e-del">حذف</button></div>`);
-  const c = $('#e-c'), t = $('#e-t');
-  $('#e-m').onclick = () => c.value = Math.max(0, +c.value - 1);
-  $('#e-p').onclick = () => { c.value = +c.value + 1; if (+t.value && +c.value >= +t.value) $('#e-st').value = 'completed'; else if ($('#e-st').value === 'planned') $('#e-st').value = 'watching'; };
-  $('#e-ty').onchange = e => $('#eps').hidden = e.target.value === 'movie';
-  $('#e-ok').onclick = async () => {
-    const d = {type:$('#e-ty').value, status:$('#e-st').value, cur:+c.value || 0, total:+t.value || 0, note:$('#e-n').value.trim(), updated:Date.now()};
-    if (d.status === 'completed' && d.total) d.cur = d.total;
-    await setDoc(doc(db, 'users', user.uid, 'items', it.id), d, {merge:true}); close(); toast('انحفظ');
+  let st = it.status;
+  open(`<div class="pv"><div class="poster">${it.poster ? `<img src="${esc(it.poster)}" alt="">` : `<div class="ph">${esc(it.title)}</div>`}</div><div><h2>${esc(it.title)}</h2><small>${TYPES[it.type]}${it.year ? ' - ' + esc(it.year) : ''}</small><small>${esc((it.genres || []).join('، '))}</small></div></div>
+  <div class="btns" style="margin-top:16px">${Object.entries(STATUS).map(([k, v]) => `<button class="b ${st === k ? 'on' : ''}" data-s="${k}">${v}</button>`).join('')}</div>
+  ${it.type === 'movie' ? '' : `<div class="ep"><button id="m" aria-label="أقل">-</button><input id="c" type="number" min="0" value="${it.cur || 0}"><button id="p" aria-label="أكثر">+</button><span>من</span><input id="t" type="number" min="0" value="${it.total || 0}"></div>`}
+  <div class="btns" style="margin-top:14px"><button class="b pri" id="ok">حفظ</button><button class="b del" id="del">حذف</button></div>`);
+  const c = $('#c'), t = $('#t');
+  document.querySelectorAll('[data-s]').forEach(b => b.onclick = () => { st = b.dataset.s; document.querySelectorAll('[data-s]').forEach(x => x.classList.toggle('on', x === b)); });
+  if (c) {
+    $('#m').onclick = () => c.value = Math.max(0, +c.value - 1);
+    $('#p').onclick = () => { c.value = +c.value + 1; const on = s => { st = s; document.querySelectorAll('[data-s]').forEach(x => x.classList.toggle('on', x.dataset.s === s)); }; if (+t.value && +c.value >= +t.value) on('completed'); else if (st === 'planned') on('watching'); };
+  }
+  $('#ok').onclick = async () => {
+    const d = {status:st, updated:Date.now()};
+    if (c) { d.cur = +c.value || 0; d.total = +t.value || 0; if (st === 'completed' && d.total) d.cur = d.total; }
+    await setDoc(doc(db, 'users', user.uid, 'items', it.id), d, {merge:true}); close();
   };
-  $('#e-del').onclick = async () => { if (confirm('تحذف "' + it.title + '"؟')) { await deleteDoc(doc(db, 'users', user.uid, 'items', it.id)); close(); } };
+  $('#del').onclick = async () => { if (confirm('تحذف "' + it.title + '"؟')) { await deleteDoc(doc(db, 'users', user.uid, 'items', it.id)); close(); } };
 }
 render();
 </script>
